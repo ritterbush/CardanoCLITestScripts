@@ -2,19 +2,19 @@
 
 # Run with -h option to see full usage
 show_usage(){
-    printf "Usage:\n\n  $0 [options [parameters]]\n"
-    printf "\n"
-    printf "Sets up tests on the Cardano testnet.\n"
+    #printf "Usage:\n\n  $0 [options [parameters]]\n"
+    #printf "\n"
+    printf "Automates cardano-cli commands for the Cardano testnet.\n"
     printf "\n"
     printf "Options [parameters]:\n"
     printf "\n"
-    printf "  -k|--key|--keygen [verification key filename] [signing key filename]   Generate keypair given two filenames; if special characters are\n                             used use single quotes.\n"
-    printf "  -s|--send [sender address file] [receiver address file]    Sends transaction given two address files and integer amount in lovelace; if special characters are\n                             used use single quotes.\n"
+    printf "  -k|--key|--keygen [verification key filename] [signing key filename]\n                             Generates keypair given two filenames.\n"
+    printf "  -s|--send [sender address file] [receiver address file] [lovelace amount]\n                             Sends transaction given two address files and integer\n                             amount in lovelace.\n"
     printf "  -h|--help                  Print this help.\n"
     printf "\n"
-    printf "Checklist:\n"
-    printf "\n"
-    printf ""
+    #printf "Checklist:\n"
+    #printf "\n"
+    #printf ""
 exit
 }
 
