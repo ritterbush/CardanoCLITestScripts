@@ -1,7 +1,6 @@
 #!/bin/sh
 
 # Run with -h option to see full usage
-
 show_usage(){
     printf "Usage:\n\n  $0 [options [parameters]]\n"
     printf "\n"
@@ -47,7 +46,7 @@ while [ -n "$1" ]; do
                     filename1="$2"
                     filename2="$3"
                     shift 2
-            fi
+                fi
             else
                 echo "-k flag requires two filename inputs"
                 exit
@@ -72,6 +71,13 @@ while [ -n "$1" ]; do
             ;;
     esac
 done
+
+if [ ! command -v = cardano-cli ]
+then
+echo "cardano-cli command not found"
+exit
+fi
+
 
 if [ $keygen = true ]
 then
