@@ -39,7 +39,7 @@ while [ -n "$1" ]; do
             then
                 if [ -e "$2" ] || [ -e "$3" ]
                 then
-                    echo "One of the spcified files already exists. Remove it or use a different name."
+                    echo "One or more of the spcified files already exists. Remove them or use a different name."
                     exit
                 else
                     keygen=true
@@ -94,11 +94,17 @@ done
 
 if [ $keygen = true ]
 then
-cardano-cli address key-gen --verification-key-file $filename1 --signing-key-file $filename2
+cardano-cli address key-gen \
+    --verification-key-file $filename1 \
+    --signing-key-file $filename2
 fi
 
 if [ $send = true ]
 then
+
+# Better spot for this export ?
+export CARDANO_NODE_SOCKET_PATH=node.socket
+
 cardano-cli transaction build \
     --alonzo-era \
     --testnet-magic 1097911063 \
