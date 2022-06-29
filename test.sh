@@ -45,7 +45,7 @@ while [ -n "$1" ]; do
                     keygen=true
                     filename1="$2"
                     filename2="$3"
-                    shift 2
+                    shift 3
                 fi
             else
                 echo "-k flag requires two filename inputs"
@@ -72,12 +72,7 @@ while [ -n "$1" ]; do
     esac
 done
 
-if [ ! command -v = cardano-cli ]
-then
-echo "cardano-cli command not found"
-exit
-fi
-
+command -v pacman 2>&1 >/dev/null || { echo "cardano-cli not found\n Starting nix-shell from default \~/plutus-apps/"; pwd=`pwd`; cd "~/plutus-apps/; cd $pwd; exit;" }
 
 if [ $keygen = true ]
 then
