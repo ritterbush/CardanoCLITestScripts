@@ -8,7 +8,7 @@ show_usage(){
     printf "\n"
     printf "Options [parameters]:\n"
     printf "\n"
-    printf "  -k|--keygen [verification key filename] [signing key filename]   Generate keypair given two filenames; if special characters are\n                             used use single quotes.\n"
+    printf "  -k|--key|--keygen [verification key filename] [signing key filename]   Generate keypair given two filenames; if special characters are\n                             used use single quotes.\n"
     printf "  -s|--send [sender address file] [receiver address file]    Sends transaction given two address files and integer amount in lovelace; if special characters are\n                             used use single quotes.\n"
     printf "  -h|--help                  Print this help.\n"
     printf "\n"
@@ -52,13 +52,26 @@ while [ -n "$1" ]; do
                 exit
             fi
             ;;
-        --filename|--file|-f)
-            if [ -n "$2" ]
+        --send|-s)
+            if [ -n "$2" ] && [ -n "$3" ] && [ -n "$4" ]
             then
-                filename="$2"
-                shift 2
+                if [ ! -f "$2" ] || [ ! -f "$3" ]
+                then
+                    echo "The address files don't exist."
+                    exit
+                else
+                    if [ ! "$1" -ge 0 ] 2>/dev/null
+                    then
+                        echo "The lovelace amount needs to be a positive integer."
+                        exit
+                    else
+                        send=true
+                        filename3="$2"
+                        filename4="$3"
+                        shift 3
+                fi
             else
-                echo "-f flag requires a filename"
+                echo "-k flag requires two filename inputs"
                 exit
             fi
             ;;
