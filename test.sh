@@ -72,7 +72,8 @@ while [ -n "$1" ]; do
     esac
 done
 
-command -v pacman 2>&1 >/dev/null || { echo "cardano-cli not found\n Starting nix-shell from default \~/plutus-apps/"; pwd=`pwd`; cd "~/plutus-apps/; cd $pwd; exit;" }
+### Advanced: can we run the nix shell and execute this script (again) if cardano-cli command is not found? ###
+#command -v cardano-cli 2>&1 >/dev/null || { echo "cardano-cli not found\nStarting nix-shell from default ~/plutus-apps/"; pwd=`pwd`; cd ~/plutus-apps/; nix-shell; echo "Error: this error won't run until nix-shell is exited"; cd $pwd; exit; }
 
 if [ $keygen = true ]
 then
