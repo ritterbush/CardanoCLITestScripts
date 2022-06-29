@@ -60,18 +60,22 @@ while [ -n "$1" ]; do
                     echo "The address files don't exist."
                     exit
                 else
-                    if [ ! "$1" -ge 0 ] 2>/dev/null
-                    then
-                        echo "The lovelace amount needs to be a positive integer."
-                        exit
-                    else
-                        send=true
-                        filename3="$2"
-                        filename4="$3"
-                        shift 3
+                    case $4 in
+                        ''|*[!0-9]*)
+                            echo "The lovelace amount needs to be a positive integer"
+                            exit
+                            ;;
+                        *)
+                            send=true
+                            filename3="$2"
+                            filename4="$3"
+                            amt_lovelace="$4"
+                            shift 4
+                            ;;
+                    esac
                 fi
             else
-                echo "-k flag requires two filename inputs"
+                echo "-s flag requires two filename inputs and a positive integer"
                 exit
             fi
             ;;
