@@ -9,7 +9,7 @@ show_usage(){
     printf "Options [parameters]:\n"
     printf "\n"
     printf "  -k|--key|--keygen [verification key filename] [signing key filename]\n                             Generates keypair given two filenames.\n"
-    printf "  -s|--send [sender address file] [receiver address file] [lovelace amount]\n                             Sends transaction given two address files and integer\n                             amount in lovelace.\n"
+    printf "  -s|--send [sender address file] [receiver address file] [lovelace amount] [signing key file]\n                             Sends transaction given two address files and integer\n                             amount in lovelace.\n"
     printf "  -h|--help                  Print this help.\n"
     printf "\n"
     #printf "Checklist:\n"
@@ -26,6 +26,7 @@ send=false
 filename3=default-filename3.txt
 filename4=default-filename4.txt
 amt_lovelace=0
+signing_key_file=default-filename5.txt
 
 if [ $# -eq 0 ]; then
     show_usage
@@ -53,11 +54,11 @@ while [ -n "$1" ]; do
             fi
             ;;
         --send|-s)
-            if [ -n "$2" ] && [ -n "$3" ] && [ -n "$4" ]
+            if [ -n "$2" ] && [ -n "$3" ] && [ -n "$4" ] && [ -n "$5" ]
             then
-                if [ ! -f "$2" ] || [ ! -f "$3" ]
+                if [ ! -f "$2" ] || [ ! -f "$3" ] || [ ! -f "$5" ]
                 then
-                    echo "The address files don't exist."
+                    echo "The address or signing key files don't exist."
                     exit
                 else
                     case $4 in
@@ -70,7 +71,8 @@ while [ -n "$1" ]; do
                             filename3="$2"
                             filename4="$3"
                             amt_lovelace="$4"
-                            shift 4
+                            signing_key_file="$5"
+                            shift 5
                             ;;
                     esac
                 fi
@@ -121,7 +123,7 @@ cardano-cli transaction build \
 
 cardano-cli transaction sign \
     --tx-body-file tx.body \
-    --signing-key-file 01.skey \
+    --signing-key-file $signing_key_file \
     --testnet-magic 1097911063 \
     --out-file tx.signed
 
