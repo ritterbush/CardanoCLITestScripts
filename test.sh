@@ -105,11 +105,17 @@ then
 # Better spot for this export ?
 export CARDANO_NODE_SOCKET_PATH=node.socket
 
+# Get tx-in hash address
+tx_in=`cardano-cli query utxo \
+    --address $(cat $filename3) \
+    --testnet-magic 1097911063 \
+    | awk 'FNR == 3 {print $1}'`
+
 cardano-cli transaction build \
     --alonzo-era \
     --testnet-magic 1097911063 \
     --change-address $(cat $filename3) \
-    --tx-in dfc1a522cd34fe723a0e89f68ed43a520fd218e20d8e5705b120d2cedc7f45ad#0 \
+    --tx-in $tx_in#0 \
     --tx-out "$(cat $filename4) $amt_lovelace lovelace" \
     --out-file tx.body
 
