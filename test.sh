@@ -94,11 +94,23 @@ done
 ### Advanced: can we run the nix shell and execute this script (again) if cardano-cli command is not found? ###
 #command -v cardano-cli 2>&1 >/dev/null || { echo "cardano-cli not found\nStarting nix-shell from default ~/plutus-apps/"; pwd=`pwd`; cd ~/plutus-apps/; nix-shell; echo "Error: this error won't run until nix-shell is exited"; cd $pwd; exit; }
 
+### Common functions ###
+key_gen () {
+    cardano-cli address key-gen \
+        --verification-key-file $1 \
+        --signing-key-file $2
+}
+
+address_build () {
+    cardano-cli address build \
+        --payment-verification-key-file $1 \
+        --testnet-magic 1097911063 \
+        --out-file $2
+}
+
 if [ $keygen = true ]
 then
-cardano-cli address key-gen \
-    --verification-key-file $filename1 \
-    --signing-key-file $filename2
+    key_gen $filename1 $filename2
 fi
 
 if [ $send = true ]
