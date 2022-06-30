@@ -49,7 +49,7 @@ while [ -n "$1" ]; do
                     shift 3
                 fi
             else
-                echo "-k flag requires two filename inputs"
+                echo "-k flag requires two filename inputs. Use -h for help."
                 exit
             fi
             ;;
@@ -77,7 +77,7 @@ while [ -n "$1" ]; do
                     esac
                 fi
             else
-                echo "-s flag requires two filename inputs and a positive integer"
+                echo "-s flag requires two filenames, a positive integer, and a signing key filename. Use -h for help."
                 exit
             fi
             ;;
